@@ -16,10 +16,11 @@ import java.io.IOException;
 @WebServlet("/user/login")
 public class LoginUserServlet extends HttpServlet {
 
-    private static final Logger log = LoggerFactory.getLogger(UpdateUserFormServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(LoginUserServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log.info("{}", req.getRequestURI());
         User user = DataBase.findUserById(req.getParameter("userId"));
         log.debug("user : {}", user);
 
