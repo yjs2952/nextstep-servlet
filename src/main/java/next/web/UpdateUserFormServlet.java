@@ -32,6 +32,7 @@ public class UpdateUserFormServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log.info(req.getRequestURI());
         User user = new User(req.getParameter("userId"), req.getParameter("password"), req.getParameter("name"),
                 req.getParameter("email"));
         log.debug("user : {}", user);

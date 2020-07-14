@@ -5,7 +5,7 @@
     <div class="col-md-12">
         <div class="navbar-header">
 
-            <a href="../index.jsp" class="navbar-brand">SLiPP</a>
+            <a href="/" class="navbar-brand">SLiPP</a>
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
                 <i class="glyphicon glyphicon-search"></i>
             </button>
@@ -28,7 +28,7 @@
                         <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
                     </ul>
                 </li>
-                <li><a href="../user/list.jsp"><i class="glyphicon glyphicon-user"></i></a></li>
+                <li><a href="${pageContext.request.contextPath}/user/list"><i class="glyphicon glyphicon-user"></i></a></li>
             </ul>
         </div>
     </div>
@@ -45,11 +45,17 @@
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse2">
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="../index.jsp">Posts</a></li>
-                <li><a href="${pageContext.request.contextPath}/user/login" role="button">로그인</a></li>
-                <li><a href="form.jsp" role="button">회원가입</a></li>
-                <li><a href="#" role="button">로그아웃</a></li>
-                <li><a href="../user/update.jsp" role="button">개인정보수정</a></li>
+                <li class="active"><a href="${pageContext.request.contextPath}/">Posts</a></li>
+                <c:choose>
+                    <c:when test="${empty sessionScope.user}">
+                        <li><a href="${pageContext.request.contextPath}/user/login" role="button">로그인</a></li>
+                        <li><a href="${pageContext.request.contextPath}/user/create" role="button">회원가입</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="${pageContext.request.contextPath}/user/logout" role="button">로그아웃</a></li>
+                        <li><a href="${pageContext.request.contextPath}/user/update" role="button">개인정보수정</a></li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </div>
     </div>
