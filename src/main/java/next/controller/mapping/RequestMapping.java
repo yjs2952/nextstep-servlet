@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RequestMapping {
-    private final Logger log = LoggerFactory.getLogger(DispatcherServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(DispatcherServlet.class);
     private final Map<String, Controller> mappings = new HashMap<>();
 
     void initMapping() {
