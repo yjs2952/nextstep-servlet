@@ -1,6 +1,7 @@
 package next.controller;
 
 import core.db.DataBase;
+import core.mvc.Controller;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
