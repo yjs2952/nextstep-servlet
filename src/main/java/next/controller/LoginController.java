@@ -1,15 +1,13 @@
 package next.controller;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import core.db.DataBase;
 import core.mvc.Controller;
 import next.model.User;
 
-@WebServlet(value = {"/users/login"})
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 public class LoginController implements Controller {
 
     @Override

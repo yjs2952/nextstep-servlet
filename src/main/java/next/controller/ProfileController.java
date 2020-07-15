@@ -4,11 +4,9 @@ import core.db.DataBase;
 import core.mvc.Controller;
 import next.model.User;
 
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/users/profile")
 public class ProfileController implements Controller {
 
     @Override

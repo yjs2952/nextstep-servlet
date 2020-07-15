@@ -1,17 +1,14 @@
 package next.controller;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import core.db.DataBase;
 import core.mvc.Controller;
+import next.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import core.db.DataBase;
-import next.model.User;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(value = { "/users/update"})
 public class UpdateUserController implements Controller {
     private static final Logger log = LoggerFactory.getLogger(UpdateUserController.class);
 
@@ -26,7 +23,6 @@ public class UpdateUserController implements Controller {
                 req.getParameter("email"));
         log.debug("Update User : {}", updateUser);
         user.update(updateUser);
-
         return "redirect:/";
     }
 }

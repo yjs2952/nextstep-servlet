@@ -4,11 +4,9 @@ import core.db.DataBase;
 import core.mvc.Controller;
 import next.model.User;
 
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(value = { "/users/updateForm"})
 public class UpdateFormUserController implements Controller {
 
     @Override
