@@ -48,7 +48,24 @@
 							</div>
 						</div>
 					</div>
-				</li>
+				</li><li>
+				<div class="wrap">
+					<div class="main">
+						<strong class="subject">
+							<a href="./qna/show.html">자동 배포 테스트 ㅋ</a>햐ㅕㅅ ㅣㅐㅎ
+						</strong>
+						<div class="auth-info">
+							<i class="icon-add-comment"></i>
+							<span class="time">2016-01-05 18:47</span>
+							<a href="./user/profile.html" class="author">김문수</a>
+						</div>
+						<div class="reply" title="댓글">
+							<i class="icon-reply"></i>
+							<span class="point">12</span>
+						</div>
+					</div>
+				</div>
+			</li>
 			</ul>
 			<div class="row">
 				<div class="col-md-3"></div>
