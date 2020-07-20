@@ -1,14 +1,13 @@
 package next.dao;
 
-import java.sql.Connection;
+import next.model.User;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import core.jdbc.ConnectionManager;
-import next.model.User;
+import java.util.stream.Collectors;
 
 public class UserDao {
     public void insert(User user) throws SQLException {
@@ -50,6 +49,9 @@ public class UserDao {
     }
 
     public List<User> findAll() throws SQLException {
+
+        String sql = "SELECT userId, password, name, email FROM USERS";
+
         SelectJdbcTemplate sjt = new SelectJdbcTemplate() {
             @Override
             void setValues(PreparedStatement preparedStatement) throws SQLException {
@@ -58,12 +60,14 @@ public class UserDao {
 
             @Override
             Object mapRow(ResultSet rs) throws SQLException {
-                return null;
+                return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"),
+                        rs.getString("email"));
             }
         };
 
-            // TODO 구현 필요함.
-        return new ArrayList<>();
+        return sjt.query(sql).stream()
+                .map(o -> (User) o)
+                .collect(Collectors.toList());
     }
 
     public User findByUserId(String userId) throws SQLException {
@@ -78,12 +82,8 @@ public class UserDao {
 
             @Override
             Object mapRow(ResultSet rs) throws SQLException {
-                User user = null;
-                if (rs.next()) {
-                    user = new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"),
+                return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"),
                             rs.getString("email"));
-                }
-                return user;
             }
         };
 
