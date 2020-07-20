@@ -1,22 +1,20 @@
 package next.dao;
 
 import core.jdbc.ConnectionManager;
-import next.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public abstract class JdbcTemplate {
-    public void execute(User user) throws SQLException {
+    public void execute(String query) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
             con = ConnectionManager.getConnection();
-            String sql = createQuery();
-            pstmt = con.prepareStatement(sql);
+            pstmt = con.prepareStatement(query);
 
-            setValues(user, pstmt);
+            setValues(pstmt);
         } finally {
             if (pstmt != null) {
                 pstmt.close();
@@ -28,7 +26,5 @@ public abstract class JdbcTemplate {
         }
     }
 
-    abstract void setValues(User user, PreparedStatement pstmt) throws SQLException;
-
-    abstract String createQuery();
+    abstract void setValues(PreparedStatement pstmt) throws SQLException;
 }
