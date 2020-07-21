@@ -5,7 +5,6 @@ import next.model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,9 +23,14 @@ public class UserDao {
 
                 pstmt.executeUpdate();
             }
+
+            @Override
+            Object mapRow(ResultSet rs) throws SQLException {
+                return null;
+            }
         };
 
-        insertJdbcTemplate.execute(query);
+        insertJdbcTemplate.update(query);
     }
 
     void update(User user) throws SQLException {
@@ -43,16 +47,21 @@ public class UserDao {
 
                 pstmt.executeUpdate();
             }
+
+            @Override
+            Object mapRow(ResultSet rs) throws SQLException {
+                return null;
+            }
         };
 
-        updateJdbcTemplate.execute(query);
+        updateJdbcTemplate.update(query);
     }
 
     public List<User> findAll() throws SQLException {
 
         String sql = "SELECT userId, password, name, email FROM USERS";
 
-        SelectJdbcTemplate sjt = new SelectJdbcTemplate() {
+        JdbcTemplate sjt = new JdbcTemplate() {
             @Override
             void setValues(PreparedStatement preparedStatement) throws SQLException {
 
@@ -74,7 +83,7 @@ public class UserDao {
 
         String sql = "SELECT userId, password, name, email FROM USERS WHERE userid=?";
 
-        SelectJdbcTemplate sjt = new SelectJdbcTemplate() {
+        JdbcTemplate sjt = new JdbcTemplate() {
             @Override
             void setValues(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, userId);
