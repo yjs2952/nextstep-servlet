@@ -9,9 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class JdbcTemplate {
+class JdbcTemplate {
 
-    public List<Object> query(String sql) throws SQLException {
+    List<Object> query(String sql, PreparedStatementSetter setter, RowMapper rowMapper) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -19,13 +19,13 @@ public abstract class JdbcTemplate {
             con = ConnectionManager.getConnection();
             pstmt = con.prepareStatement(sql);
 
-            setValues(pstmt);
+            setter.values(pstmt);
 
             rs = pstmt.executeQuery();
 
             List<Object> list = new ArrayList<>();
             while (rs.next()) {
-                list.add(mapRow(rs));
+                list.add(rowMapper.mapRow(rs));
             }
 
             return list;
@@ -47,7 +47,7 @@ public abstract class JdbcTemplate {
         return null;
     }
 
-    public Object queryForObject(String sql) throws SQLException {
+    Object queryForObject(String sql, PreparedStatementSetter setter, RowMapper rowMapper) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -55,12 +55,12 @@ public abstract class JdbcTemplate {
             con = ConnectionManager.getConnection();
             pstmt = con.prepareStatement(sql);
 
-            setValues(pstmt);
+            setter.values(pstmt);
 
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                return mapRow(rs);
+                return rowMapper.mapRow(rs);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -79,14 +79,14 @@ public abstract class JdbcTemplate {
         return null;
     }
 
-    public void update(String query) throws SQLException {
+    void update(String query, PreparedStatementSetter setter) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
             con = ConnectionManager.getConnection();
             pstmt = con.prepareStatement(query);
 
-            setValues(pstmt);
+            setter.values(pstmt);
         } finally {
             if (pstmt != null) {
                 pstmt.close();
@@ -97,8 +97,4 @@ public abstract class JdbcTemplate {
             }
         }
     }
-
-    abstract void setValues(PreparedStatement pstmt) throws SQLException;
-
-    abstract Object mapRow(ResultSet rs) throws SQLException;
 }
