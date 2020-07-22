@@ -12,13 +12,11 @@ import java.util.List;
 class JdbcTemplate {
 
     List<Object> query(String sql, PreparedStatementSetter setter, RowMapper rowMapper) throws SQLException {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        try {
-            con = ConnectionManager.getConnection();
-            pstmt = con.prepareStatement(sql);
 
+        ResultSet rs = null;
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql);
+        ) {
             setter.values(pstmt);
 
             rs = pstmt.executeQuery();
@@ -36,24 +34,16 @@ class JdbcTemplate {
             if (rs != null) {
                 rs.close();
             }
-            if (pstmt != null) {
-                pstmt.close();
-            }
-            if (con != null) {
-                con.close();
-            }
         }
 
         return null;
     }
 
     Object queryForObject(String sql, PreparedStatementSetter setter, RowMapper rowMapper) throws SQLException {
-        Connection con = null;
-        PreparedStatement pstmt = null;
         ResultSet rs = null;
-        try {
-            con = ConnectionManager.getConnection();
-            pstmt = con.prepareStatement(sql);
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql);
+             ){
 
             setter.values(pstmt);
 
@@ -68,33 +58,16 @@ class JdbcTemplate {
             if (rs != null) {
                 rs.close();
             }
-            if (pstmt != null) {
-                pstmt.close();
-            }
-            if (con != null) {
-                con.close();
-            }
         }
 
         return null;
     }
 
     void update(String query, PreparedStatementSetter setter) throws SQLException {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        try {
-            con = ConnectionManager.getConnection();
-            pstmt = con.prepareStatement(query);
-
+        try (
+                Connection con = ConnectionManager.getConnection();
+                PreparedStatement pstmt = con.prepareStatement(query);){
             setter.values(pstmt);
-        } finally {
-            if (pstmt != null) {
-                pstmt.close();
-            }
-
-            if (con != null) {
-                con.close();
-            }
         }
     }
 }
