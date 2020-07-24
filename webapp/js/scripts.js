@@ -8,3 +8,19 @@ String.prototype.format = function() {
   });
 };
 
+function addAnswer(e) {
+    e.preventDefault();
+
+    var queryString = $("form[name=answer]").serialize();
+
+    $.ajax({
+        type : 'post',
+        url : '/api/qna/addAnswer',
+        data : queryString,
+        dataType : 'json',
+        error : onError,
+        success : onSuccess,
+    });
+}
+
+$(".answerWrite input[type=submit]").click(addAnswer);
