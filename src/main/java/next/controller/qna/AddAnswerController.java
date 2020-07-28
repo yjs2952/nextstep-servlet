@@ -27,6 +27,5 @@ public class AddAnswerController implements Controller {
         PrintWriter out = resp.getWriter();
         out.print(objectMapper.writeValueAsString(savedAnswer));
         return null;
-        //asdasd
     }
 }
