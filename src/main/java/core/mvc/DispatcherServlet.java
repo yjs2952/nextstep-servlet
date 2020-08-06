@@ -1,22 +1,19 @@
 package core.mvc;
 
-import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
 
 @WebServlet(name = "dispatcher", urlPatterns = "/", loadOnStartup = 1)
 public class DispatcherServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final Logger logger = LoggerFactory.getLogger(DispatcherServlet.class);
-    private static final String DEFAULT_REDIRECT_PREFIX = "redirect:";
 
     private RequestMapping rm;
 
@@ -32,9 +29,11 @@ public class DispatcherServlet extends HttpServlet {
         logger.debug("Method : {}, Request URI : {}", req.getMethod(), requestUri);
 
         Controller controller = rm.findController(requestUri);
+        ModelAndView mav;
         try {
-            View view = controller.execute(req, resp);
-            view.render(req, resp);
+            mav = controller.execute(req, resp);
+            View view = mav.getView();
+            view.render(mav.getModel(), req, resp);
         } catch (Throwable e) {
             logger.error("Exception : {}", e);
             throw new ServletException(e.getMessage());
