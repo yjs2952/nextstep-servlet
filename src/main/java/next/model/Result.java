@@ -1,8 +1,8 @@
 package next.model;
 
 public class Result {
-    private boolean status;
-    private String message;
+    private final boolean status;
+    private final String message;
 
     private Result(boolean status) {
         this(status, "");
